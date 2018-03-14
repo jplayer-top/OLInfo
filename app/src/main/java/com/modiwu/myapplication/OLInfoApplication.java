@@ -14,6 +14,7 @@ public class OLInfoApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         BaseInitApplication.init(this).retrofit()
+                //动态Url
                 .addUrl("cai_url", "https://m.leader001.cn/")
                 .addUrl("jplayer_url", "https://jplayer.top/");
     }
