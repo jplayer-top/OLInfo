@@ -14,10 +14,7 @@ public class SharePreUtil {
 
     /**
      * 保存数据到文件
-     *
-     * @param context
-     * @param key
-     * @param data
+
      */
     public static void saveData(Context context, String key, Object data) {
 
@@ -42,10 +39,7 @@ public class SharePreUtil {
 
     /**
      * 从文件中读取数据
-     *
-     * @param context
-     * @param key
-     * @param defValue
+
      * @return
      */
     public static Object getData(Context context, String key, Object defValue) {

@@ -1,11 +1,8 @@
 package top.jplayer.baseprolibrary.ui.adapter;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import top.jplayer.baseprolibrary.R;
@@ -13,6 +10,7 @@ import top.jplayer.baseprolibrary.mvp.model.bean.SampleBean;
 
 /**
  * Created by Administrator on 2018/1/29.
+ * 样例
  */
 
 public class SampleAdapter extends BaseQuickAdapter<SampleBean.DataBean.ListBean, BaseViewHolder> {

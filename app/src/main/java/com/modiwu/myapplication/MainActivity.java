@@ -1,17 +1,37 @@
 package com.modiwu.myapplication;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import top.jplayer.baseprolibrary.ui.SampleActivity;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+import top.jplayer.baseprolibrary.mvp.model.bean.SampleBean;
+import top.jplayer.baseprolibrary.ui.SuperBaseActivity;
+import top.jplayer.baseprolibrary.ui.adapter.SampleAdapter;
+
+public class MainActivity extends SuperBaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, SampleActivity.class));
+    protected int initRootLayout() {
+        return R.layout.activity_main;
     }
+
+    @Override
+    public void initRootData(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        ArrayList<SampleBean.DataBean.ListBean> beans = new ArrayList<>();
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        beans.add(new SampleBean.DataBean.ListBean());
+        recyclerView.setAdapter(new SampleAdapter(beans));
+    }
+
 }

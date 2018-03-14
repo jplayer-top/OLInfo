@@ -1,27 +1,18 @@
 package top.jplayer.baseprolibrary.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yanzhenjie.permission.AndPermission;
-
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
 import top.jplayer.baseprolibrary.R;
-import top.jplayer.baseprolibrary.net.IoMainSchedule;
-import top.jplayer.baseprolibrary.utils.ToastUtils;
-import top.jplayer.baseprolibrary.widgets.dialog.DialogLoading;
+import top.jplayer.baseprolibrary.utils.KeyboardUtils;
+import top.jplayer.baseprolibrary.utils.StringUtils;
 
 /**
  * Created by Obl on 2018/1/9.
@@ -30,117 +21,62 @@ import top.jplayer.baseprolibrary.widgets.dialog.DialogLoading;
 
 public abstract class SuperBaseActivity extends AppCompatActivity {
 
-    protected View contentView;
-    protected Toolbar mToolBar;
-    protected ImageView mIvGoBack;
-    protected TextView tvBarTitle;
-    protected ImageView ivBarSearch;
-    protected FrameLayout mFlRootView;
-    public SuperBaseActivity mBaseActivity;
-    public String mTitle;
-    public Bundle mBundle;
+
+    public View superRootView;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initBundle(savedInstanceState);
-        setContentView(setDefView());
+        initRootBundle(savedInstanceState);
+        superRootView = initRootView();
+        setContentView(superRootView);
+        initRootData(superRootView);
+        initInject(superRootView);
     }
 
-
-    /**
-     * 重写可重置根布局
-     *
-     * @return 根布局
-     */
-    public View setDefView() {
-        contentView = View.inflate(this, R.layout.activity_super_base, null);
-        initDefSuperView(contentView);
-        if (mTitle != null) tvBarTitle.setText(mTitle);
-        return contentView;
-    }
-
-
-    /**
-     * 默认原始含有ToolBar，无需重写
-     *
-     * @param rootView 根布局
-     */
-    private void initDefSuperView(View rootView) {
-        mFlRootView = rootView.findViewById(R.id.flRootView);
-        mToolBar = rootView.findViewById(R.id.toolbar);
-        findToolBarView(rootView);
-        initSuperData(mFlRootView);
-        customBarLeft();
-    }
-
-    public void findToolBarView(View rootView) {
-        mIvGoBack = contentView.findViewById(R.id.ivGoBack);
-        tvBarTitle = contentView.findViewById(R.id.tvBarTitle);
-        tvBarTitle.setText(getIntent().getStringExtra("title"));
-        ivBarSearch = contentView.findViewById(R.id.ivBarSearch);
+    protected View initRootView() {
+        int layout = initRootLayout();
+        if (layout == 0) {
+            layout = R.layout.layout_test;
+        }
+        return View.inflate(this, layout, null);
     }
 
     /**
-     * 权限反馈
+     * 依赖注入
      */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    public void initInject(View view) {
     }
+
+    @LayoutRes
+    protected abstract int initRootLayout();
 
     /**
      * 默认原始根布局下的FrameLayout,基于相同ToolBar 的视图
      *
-     * @param mFlRootView 根布局下的FrameLayout
+     * @param view 根布局
      */
-    public abstract void initSuperData(FrameLayout mFlRootView);
+    public abstract void initRootData(View view);
 
-    /**
-     * 自定义ToolBar左侧按钮
-     */
-    public void customBarLeft() {
-        mIvGoBack.setVisibility(View.VISIBLE);
-        mIvGoBack.setOnClickListener(v -> finish());
-    }
 
     /**
      * 保存状态,可设置一些公共代码
      *
      * @param savedInstanceState 所保存的状态信息
      */
-    public void initBundle(Bundle savedInstanceState) {
-        mTitle = getIntent().getStringExtra("title");
-        mBundle = getIntent().getBundleExtra("bundle");
+    public void initRootBundle(Bundle savedInstanceState) {
+
     }
 
-    public DialogLoading mLoading;
-    private Date mDate;
-    private long mPreTime;
-
-    public void dialogDismiss(String msg) {
-        if (mLoading != null && mLoading.isShowing()) {
-            long aftTime = mDate.getTime();
-            long l = aftTime - mPreTime;
-            Observable.timer(l < 1000 ? 1000 - l : 0, TimeUnit.MILLISECONDS)
-                    .compose(new IoMainSchedule<>())
-                    .subscribe(aLong -> {
-                        mLoading.dismiss();
-                        if (!msg.equals("")) {
-                            ToastUtils.init().showInfoToast(this, msg);
-                        }
-                    });
-        }
-    }
-
-    public void dialogShow(Context context) {
-        mLoading = new DialogLoading(context);
-        if (!mLoading.isShowing()) {
-            mDate = new Date();
-            mLoading.show();
-            mPreTime = mDate.getTime();
-        }
+    /**
+     * 设置文字
+     *
+     * @param viewResId
+     * @param text
+     */
+    public void setText(@IdRes int viewResId, CharSequence text) {
+        TextView tv = findViewById(viewResId);
+        tv.setText(StringUtils.init().fixNullStr(text));
     }
 
     @Override
@@ -161,5 +97,20 @@ public abstract class SuperBaseActivity extends AppCompatActivity {
 
     public void restoreInstanceState(Bundle savedInstanceState) {
 
+    }
+
+    /**
+     * 是否检查关闭软键盘
+     */
+    protected boolean isCheckKeyboard = true;
+
+    /**
+     * 点击空白处关闭软键盘
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (isCheckKeyboard)
+            KeyboardUtils.init().clickBound2CloseInput(this, ev);
+        return super.dispatchTouchEvent(ev);
     }
 }

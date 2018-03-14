@@ -50,6 +50,7 @@
     </style>
 
     <style name="OblAppTheme.TextView">
+        <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorBlackGold</item>
         <!--字母 true 全大写-->
         <item name="android:textAllCaps">false</item>
@@ -91,8 +92,19 @@
         <item name="android:minHeight">48dip</item>
         <item name="android:maxHeight">48dip</item>
     </style>
+
     <style name="SpinKitView.CubeGrid">
         <item name="SpinKit_Style">CubeGrid</item>
+    </style>
+
+    <!--默认的marginStyle-->
+    <style name="card_margin_style">
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginEnd">@dimen/dp_10</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:layout_marginStart">@dimen/dp_10</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <declare-styleable name="WaveSideBarView">

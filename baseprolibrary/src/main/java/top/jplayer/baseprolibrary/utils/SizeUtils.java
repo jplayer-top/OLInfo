@@ -5,6 +5,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
+import top.jplayer.baseprolibrary.BaseInitApplication;
+
 /**
  * <pre>
  *     author: Blankj
@@ -26,7 +28,7 @@ public final class SizeUtils {
      * @return px 值
      */
     public static int dp2px(final float dpValue) {
-        final float scale = Utils.getApp().getResources().getDisplayMetrics().density;
+        final float scale = BaseInitApplication.getContext().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
@@ -37,7 +39,7 @@ public final class SizeUtils {
      * @return dp 值
      */
     public static int px2dp(final float pxValue) {
-        final float scale = Utils.getApp().getResources().getDisplayMetrics().density;
+        final float scale = BaseInitApplication.getContext().getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 
@@ -48,7 +50,7 @@ public final class SizeUtils {
      * @return px 值
      */
     public static int sp2px(final float spValue) {
-        final float fontScale = Utils.getApp().getResources().getDisplayMetrics().scaledDensity;
+        final float fontScale = BaseInitApplication.getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
 
@@ -59,7 +61,7 @@ public final class SizeUtils {
      * @return sp 值
      */
     public static int px2sp(final float pxValue) {
-        final float fontScale = Utils.getApp().getResources().getDisplayMetrics().scaledDensity;
+        final float fontScale = BaseInitApplication.getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
 
