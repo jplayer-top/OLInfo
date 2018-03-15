@@ -4,6 +4,7 @@ package top.jplayer.baseprolibrary.widgets.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.view.Gravity;
@@ -20,20 +21,22 @@ import top.jplayer.baseprolibrary.utils.ScreenUtils;
  * d
  */
 
-public abstract class BaseBottomDialog extends Dialog {
+public abstract class BaseCustomDialog extends Dialog {
 
     public Context mContext;
+    public View mContentView;
 
-    public BaseBottomDialog(Context context) {
+
+    public BaseCustomDialog(Context context) {
         this(context, R.style.dialog_custom);
         mContext = context;
     }
 
-    public BaseBottomDialog(@NonNull Context context, @StyleRes int themeResId) {
+    public BaseCustomDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
-        View view = View.inflate(getContext(), initLayout(), null);
-        initView(view);
-        super.setContentView(view);
+        mContentView = View.inflate(context, initLayout(), null);
+        initView(mContentView);
+        super.setContentView(mContentView);
     }
 
     protected abstract void initView(View view);
@@ -49,27 +52,32 @@ public abstract class BaseBottomDialog extends Dialog {
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         lp.dimAmount = 0.5f;
-        lp.width = setWidth();
+        lp.width = setWidth(7);
         window.setGravity(setGravity());
         window.setWindowAnimations(setAnim());
         window.setAttributes(lp);
         setCanceledOnTouchOutside(true);// 点击Dialog外部消失
     }
 
-    public void setGravityAnim() {
-
-    }
-
     public int setAnim() {
-        return R.style.AnimCenter;
+        return R.style.AnimFade;
     }
 
     public int setGravity() {
         return Gravity.CENTER;
     }
 
-    public int setWidth() {
-        return ScreenUtils.getScreenWidth() / 10 * 7;
+    public int setWidth(int i) {
+        return ScreenUtils.getScreenWidth() / 10 * i;
+    }
+
+    public void show(@IdRes int ids) {
+        show(ids, v -> cancel());
+    }
+
+    public void show(@IdRes int ids, View.OnClickListener listener) {
+        show();
+        mContentView.findViewById(ids).setOnClickListener(listener);
     }
 
     @Override

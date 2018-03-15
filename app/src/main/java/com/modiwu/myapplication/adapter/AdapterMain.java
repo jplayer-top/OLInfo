@@ -13,11 +13,11 @@ import java.util.List;
 
 public class AdapterMain extends BaseQuickAdapter<String, BaseViewHolder> {
     public AdapterMain(List<String> beans) {
-        super(R.layout.adapter_main,beans);
+        super(R.layout.adapter_main, beans);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-
+        helper.setText(R.id.tvTitle, item);
     }
 }
