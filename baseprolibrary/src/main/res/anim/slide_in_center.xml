@@ -13,8 +13,7 @@
 ** Unless required by applicable law or agreed to in writing, software 
 ** distributed under the License is distributed on an "AS IS" BASIS, 
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-** See the License for the specific lan
-guage governing permissions and
+** See the License for the specific language governing permissions and 
 ** limitations under the License.
 */
 -->
@@ -22,8 +21,8 @@ guage governing permissions and
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <translate
         android:duration="@android:integer/config_shortAnimTime"
-        android:fromXDelta="50%p"
-        android:toXDelta="0"/>
+        android:fromYDelta="20%p"
+        android:toYDelta="0"/>
     <alpha
         android:duration="@android:integer/config_shortAnimTime"
         android:fromAlpha="0.0"

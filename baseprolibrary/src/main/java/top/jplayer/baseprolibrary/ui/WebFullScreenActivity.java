@@ -11,7 +11,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 
 import top.jplayer.baseprolibrary.R;
 
@@ -94,13 +93,17 @@ public class WebFullScreenActivity extends SuperBaseActivity {
         }
         super.onDestroy();
     }
+    @Override
+    protected int initRootLayout() {
+        return R.layout.webview;
+    }
 
     @Override
-    public void initSuperData(FrameLayout mFlRootView) {
-        mFlRootView.addView(View.inflate(this, R.layout.webview, null));
-        mWebView = mFlRootView.findViewById(R.id.webView);
+    public void initRootData(View view) {
+        mWebView = view.findViewById(R.id.webView);
         setType();
         mBundle = getIntent().getBundleExtra("bundle");
         mWebView.loadUrl(mBundle.getString("url"));
     }
+
 }

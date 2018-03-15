@@ -37,14 +37,14 @@ public class ContactActivity extends SuperBaseActivity {
     private ContactCityAdapter mAdapterContactCity;
 
     @Override
-    public void initSuperData(FrameLayout mFlRootView) {
-        mFlRootView.addView(View.inflate(this, R.layout.activity_contact, null));
-        initView();
+    protected int initRootLayout() {
+        return  R.layout.activity_contact;
     }
 
-    private void initView() {
-        mSideBarView = contentView.findViewById(R.id.side_view);
-        mRecyclerView = contentView.findViewById(R.id.recycler_view);
+    @Override
+    public void initRootData(View view) {
+        mSideBarView = view.findViewById(R.id.side_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         final PinnedHeaderDecoration decoration = new PinnedHeaderDecoration();
@@ -67,7 +67,7 @@ public class ContactActivity extends SuperBaseActivity {
                 .subscribe(modelContactCities -> {
                     mAdapterContactCity = new ContactCityAdapter(modelContactCities);
                     mRecyclerView.setAdapter(mAdapterContactCity);
-                    mAdapterContactCity.setOnItemClickListener((adapter, view, position) -> {
+                    mAdapterContactCity.setOnItemClickListener((adapter, v, position) -> {
                         ModelContactCity contactCity = mAdapterContactCity.getData().get(position);
                         if (contactCity.type != ModelContactCity.HEARD) {
                             Intent i = new Intent();

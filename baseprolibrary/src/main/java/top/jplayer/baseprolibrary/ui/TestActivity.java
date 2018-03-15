@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.FrameLayout;
 
 /**
  * Created by Obl on 2018/1/18.
@@ -70,17 +69,19 @@ public class TestActivity extends SuperBaseActivity {
     }
 
     @Override
-    public void initSuperData(FrameLayout mFlRootView) {
+    protected int initRootLayout() {
+        return 0;
+    }
+
+    @Override
+    public void initRootData(View view) {
         // 让根布局进行动画
-        content.post(new Runnable() {
-            @Override
-            public void run() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mX = getIntent().getIntExtra("x", 0);
-                    mY = getIntent().getIntExtra("y", 0);
-                    Animator animator = createRevealAnimator(false, mX, mY);
-                    animator.start();
-                }
+        content.post(() -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mX = getIntent().getIntExtra("x", 0);
+                mY = getIntent().getIntExtra("y", 0);
+                Animator animator = createRevealAnimator(false, mX, mY);
+                animator.start();
             }
         });
         content.setOnTouchListener(new View.OnTouchListener() {

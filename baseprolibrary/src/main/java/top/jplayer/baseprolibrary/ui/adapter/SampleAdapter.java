@@ -20,7 +20,5 @@ public class SampleAdapter extends BaseQuickAdapter<SampleBean.DataBean.ListBean
 
     @Override
     protected void convert(BaseViewHolder helper, SampleBean.DataBean.ListBean item) {
-        helper.setText(R.id.tvTime, item.sendTime)
-                .addOnClickListener(R.id.tvTime);
     }
 }

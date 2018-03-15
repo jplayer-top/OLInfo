@@ -52,25 +52,28 @@ public class SampleActivity extends SuperBaseActivity implements SampleContract.
     private EditText etPhone;
     private EditText etPassword;
     private LinearLayout llNames;
+    @Override
+    protected int initRootLayout() {
+        return  R.layout.activity_sample;
+    }
 
     @Override
-    public void initSuperData(FrameLayout mFlRootView) {
-        mFlRootView.addView(View.inflate(this, R.layout.activity_sample, null));
+    public void initRootData(View view) {
         presenter = new SamplePresenter(this);
-        refreshLayout = mFlRootView.findViewById(R.id.smartRefreshLayout);
-        multipleStatusView = mFlRootView.findViewById(R.id.multiplestatusview);
-        etPhone = mFlRootView.findViewById(R.id.etPhone);
-        etPassword = mFlRootView.findViewById(R.id.etPassword);
-        Button btnAdd = mFlRootView.findViewById(R.id.btnAdd);
+        refreshLayout = view.findViewById(R.id.smartRefreshLayout);
+        multipleStatusView = view.findViewById(R.id.multiplestatusview);
+        etPhone = view.findViewById(R.id.etPhone);
+        etPassword = view.findViewById(R.id.etPassword);
+        Button btnAdd = view.findViewById(R.id.btnAdd);
         showLoading();
         presenter.requestHBList();
-        RecyclerView recyclerView = mFlRootView.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         ArrayList<SampleBean.DataBean.ListBean> sampleBeans = new ArrayList<>();
         adapter = new SampleAdapter(sampleBeans);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemChildClickListener((thisAdapter, view, position) ->
+        adapter.setOnItemChildClickListener((thisAdapter, v, position) ->
         {
             List<SampleBean.DataBean.ListBean> datas = thisAdapter.getData();
             SampleBean.DataBean.ListBean listBean = datas.get(position);
@@ -78,13 +81,13 @@ public class SampleActivity extends SuperBaseActivity implements SampleContract.
             return false;
         });
         refreshLayout.setOnRefreshListener(refresh -> presenter.requestHBList());
-        btnAdd.setOnClickListener(view ->
+        btnAdd.setOnClickListener(v ->
                 presenter.addAccount(etPhone.getText().toString().trim(),
                         etPassword.getText().toString().trim()));
-        llNames = mFlRootView.findViewById(R.id.llShowName);
+        llNames = view.findViewById(R.id.llShowName);
         getNames();
-
     }
+
 
     private void getNames() {
         String names = (String) SharePreUtil.getData(this, "name", "");
@@ -189,4 +192,6 @@ public class SampleActivity extends SuperBaseActivity implements SampleContract.
         llNames.removeAllViews();
         getNames();
     }
+
+
 }
