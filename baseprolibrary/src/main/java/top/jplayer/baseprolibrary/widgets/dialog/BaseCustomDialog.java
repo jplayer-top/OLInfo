@@ -36,6 +36,7 @@ public abstract class BaseCustomDialog extends Dialog {
         super(context, themeResId);
         mContentView = View.inflate(context, initLayout(), null);
         initView(mContentView);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.setContentView(mContentView);
     }
 
@@ -51,12 +52,16 @@ public abstract class BaseCustomDialog extends Dialog {
         assert window != null;
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        lp.dimAmount = 0.5f;
+        lp.dimAmount = setAlpha(0.5f);
         lp.width = setWidth(7);
         window.setGravity(setGravity());
         window.setWindowAnimations(setAnim());
         window.setAttributes(lp);
         setCanceledOnTouchOutside(true);// 点击Dialog外部消失
+    }
+
+    public float setAlpha(float alpha) {
+        return alpha;
     }
 
     public int setAnim() {

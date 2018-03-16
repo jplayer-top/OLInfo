@@ -32,4 +32,12 @@ public class LogUtil {
             Log.e("Obl-Log", new Gson().toJson(o));
         }
     }
+
+    public static void method() {
+        int level = 1;
+        StackTraceElement[] stacks = new Throwable().getStackTrace();
+        String methodName = stacks[level].getMethodName();
+        e(methodName);
+    }
+
 }

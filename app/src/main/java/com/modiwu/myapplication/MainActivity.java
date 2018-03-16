@@ -4,7 +4,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.github.florent37.viewanimator.ViewAnimator;
 import com.modiwu.myapplication.adapter.AdapterMain;
 
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import top.jplayer.baseprolibrary.ui.SuperBaseActivity;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogNoviceGuide;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogRedHb;
+import top.jplayer.baseprolibrary.widgets.dialog.DialogSign;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogSubmitSure;
 
 public class MainActivity extends SuperBaseActivity {
@@ -31,8 +31,8 @@ public class MainActivity extends SuperBaseActivity {
         beans.add("提交成功");
         beans.add("新手礼包");
         beans.add("抢红包");
-        beans.add(getString(R.string.app_name));
-        beans.add(getString(R.string.app_name));
+        beans.add("签到");
+        beans.add("输入框");
         beans.add(getString(R.string.app_name));
         beans.add(getString(R.string.app_name));
         beans.add(getString(R.string.app_name));
@@ -41,12 +41,13 @@ public class MainActivity extends SuperBaseActivity {
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, v, position) -> {
             if (position == 0) {
-
                 new DialogSubmitSure(this).show(R.id.iv_sure);
             } else if (position == 1) {
                 new DialogNoviceGuide(this).show(R.id.ivFree);
             } else if (position == 2) {
-                new DialogRedHb(this).show(R.id.ivOpen, v1 -> ViewAnimator.animate(v1).duration(1000).flipHorizontal().start());
+                new DialogRedHb(this).show(R.id.ivOpen);
+            } else if (position == 3) {
+                new DialogSign(this).show();
             }
         });
     }
