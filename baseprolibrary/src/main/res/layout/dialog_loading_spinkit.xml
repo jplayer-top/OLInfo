@@ -12,9 +12,9 @@
               android:paddingTop="18dp">
 
 
-    <top.jplayer.baseprolibrary.widgets.loadding.SpinKitView
+    <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
-        style="@style/SpinKitView.CubeGrid"
+        style="@style/SpinKitView.DoubleBounce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginTop="10dp"
-        android:text="正在进行网络请求..."
+        android:text="加载中..."
         android:textColor="@color/color999"
         android:textSize="16sp"/>
 

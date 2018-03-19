@@ -9,6 +9,8 @@ import com.modiwu.myapplication.adapter.AdapterMain;
 import java.util.ArrayList;
 
 import top.jplayer.baseprolibrary.ui.SuperBaseActivity;
+import top.jplayer.baseprolibrary.widgets.dialog.DialogEdit;
+import top.jplayer.baseprolibrary.widgets.dialog.DialogLoading;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogNoviceGuide;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogRedHb;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogShare;
@@ -34,8 +36,8 @@ public class MainActivity extends SuperBaseActivity {
         beans.add("抢红包");
         beans.add("签到");
         beans.add("分享");
-        beans.add(getString(R.string.app_name));
-        beans.add(getString(R.string.app_name));
+        beans.add("输入框");
+        beans.add("加载中");
         beans.add(getString(R.string.app_name));
         beans.add(getString(R.string.app_name));
         mAdapter = new AdapterMain(beans);
@@ -51,6 +53,10 @@ public class MainActivity extends SuperBaseActivity {
                 new DialogSign(this).show();
             } else if (position == 4) {
                 new DialogShare(this).show();
+            } else if (position == 5) {
+                new DialogEdit(this).show();
+            } else if (position == 6) {
+                new DialogLoading(this).show();
             }
         });
     }
