@@ -33,6 +33,20 @@ public class LogUtil {
         }
     }
 
+    public static String str(Object o) {
+
+        if (BuildConfig.DEBUG) {
+            if (o instanceof String) {
+                Log.e("Obl-Log", o.toString());
+                return o.toString();
+            }
+            String json = new Gson().toJson(o);
+            Log.e("Obl-Log", json);
+            return json;
+        }
+        return "";
+    }
+
     public static void method() {
         int level = 1;
         StackTraceElement[] stacks = new Throwable().getStackTrace();

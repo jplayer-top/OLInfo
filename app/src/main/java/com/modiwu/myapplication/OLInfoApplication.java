@@ -18,7 +18,8 @@ public class OLInfoApplication extends MultiDexApplication {
         super.onCreate();
         Map<String, String> map = new ArrayMap<>();
         map.put("cai_url", "https://m.leader001.cn/");
-        map.put("jplayer_url", "https://jplayer.top/");
+        map.put("jplayer_url", "http://jplayer.top/");
+        map.put("test_url", "http://www.wanandroid.com/");
         BaseInitApplication.init(this)
                 //网络请求
                 .retrofit()

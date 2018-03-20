@@ -1,10 +1,12 @@
 package com.modiwu.myapplication;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.modiwu.myapplication.adapter.AdapterMain;
+import com.modiwu.myapplication.mvp.presenter.ShopCartPresenter;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import top.jplayer.baseprolibrary.mvp.contract.IContract;
+import top.jplayer.baseprolibrary.mvp.model.bean.CartBean;
 import top.jplayer.baseprolibrary.ui.SuperBaseActivity;
 import top.jplayer.baseprolibrary.utils.LogUtil;
 import top.jplayer.baseprolibrary.utils.PickerUtils;
@@ -27,7 +31,7 @@ import top.jplayer.baseprolibrary.widgets.dialog.DialogShare;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogSign;
 import top.jplayer.baseprolibrary.widgets.dialog.DialogSubmitSure;
 
-public class MainActivity extends SuperBaseActivity {
+public class MainActivity extends SuperBaseActivity implements IContract.IView {
 
     private AdapterMain mAdapter;
 
@@ -105,8 +109,8 @@ public class MainActivity extends SuperBaseActivity {
             } else if (position == 7) {
                 new DialogLogout(this).show();
             } else if (position == 8) {
-                DialogFragmentOrder dialogOrder = new DialogFragmentOrder();
-                dialogOrder.show(getSupportFragmentManager(), "order");
+                new ShopCartPresenter(this).getDetailBean();
+
             } else if (position == 9) {
                 //具体使用请查看：https://github.com/Bigkoo/Android-PickerView
                 PickerUtils pickerUtils = new PickerUtils();
@@ -119,5 +123,28 @@ public class MainActivity extends SuperBaseActivity {
                 filter.show(getSupportFragmentManager(), "filter");
             }
         });
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    public void showDetailBean(CartBean cartBean) {
+        DialogFragmentOrder dialogOrder = new DialogFragmentOrder();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable("cart", cartBean);
+        dialogOrder.setArguments(arguments);
+        dialogOrder.show(getSupportFragmentManager(), "order");
     }
 }

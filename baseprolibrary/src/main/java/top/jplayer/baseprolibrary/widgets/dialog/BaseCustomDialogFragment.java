@@ -58,6 +58,11 @@ public abstract class BaseCustomDialogFragment extends DialogFragment {
             window.setSoftInputMode(setSoftInputState());
         }
         initView(mContentView);
+        initData(mContentView);
+    }
+
+    public void initData(View view) {
+
     }
 
     public float setAlpha() {
