@@ -11,15 +11,15 @@ import top.jplayer.baseprolibrary.R;
  * top.jplayer.baseprolibrary.widgets.dialog
  */
 
-public class DialogSign extends BaseCustomDialog {
+public class DialogLogout extends BaseCustomDialog {
 
-    public DialogSign(Context context) {
+    public DialogLogout(Context context) {
         super(context);
     }
 
     @Override
     protected void initView(View view) {
-        view.findViewById(R.id.ivCancel).setOnClickListener(v -> cancel());
+        view.findViewById(R.id.btnCancel).setOnClickListener(v -> cancel());
     }
 
     @Override
@@ -29,7 +29,7 @@ public class DialogSign extends BaseCustomDialog {
 
     @Override
     public int setAnim() {
-        return R.style.AnimTop;
+        return R.style.AnimFade;
     }
 
     @Override
@@ -38,12 +38,7 @@ public class DialogSign extends BaseCustomDialog {
     }
 
     @Override
-    public float setAlpha() {
-        return 0.1f;
-    }
-
-    @Override
     public int initLayout() {
-        return R.layout.dialog_sign;
+        return R.layout.dialog_logout;
     }
 }

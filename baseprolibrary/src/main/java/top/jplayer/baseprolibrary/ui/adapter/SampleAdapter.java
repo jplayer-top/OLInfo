@@ -15,7 +15,7 @@ import top.jplayer.baseprolibrary.mvp.model.bean.SampleBean;
 
 public class SampleAdapter extends BaseQuickAdapter<SampleBean.DataBean.ListBean, BaseViewHolder> {
     public SampleAdapter(List<SampleBean.DataBean.ListBean> sampleBeans) {
-        super(R.layout.adapter_sample, sampleBeans);
+        super(R.layout.adapter_sample_00, sampleBeans);
     }
 
     @Override

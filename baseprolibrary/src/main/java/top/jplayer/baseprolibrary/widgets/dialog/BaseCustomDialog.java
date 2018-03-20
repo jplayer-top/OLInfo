@@ -1,7 +1,7 @@
 package top.jplayer.baseprolibrary.widgets.dialog;
 
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -21,7 +21,7 @@ import top.jplayer.baseprolibrary.utils.ScreenUtils;
  * d
  */
 
-public abstract class BaseCustomDialog extends Dialog {
+public abstract class BaseCustomDialog extends AlertDialog {
 
     public Context mContext;
     public View mContentView;
@@ -37,7 +37,6 @@ public abstract class BaseCustomDialog extends Dialog {
         mContentView = View.inflate(context, initLayout(), null);
         initView(mContentView);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        super.setContentView(mContentView);
     }
 
     protected abstract void initView(View view);
@@ -52,16 +51,18 @@ public abstract class BaseCustomDialog extends Dialog {
         assert window != null;
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        lp.dimAmount = setAlpha(0.5f);
+        lp.dimAmount = setAlpha();
         lp.width = setWidth(7);
         window.setGravity(setGravity());
         window.setWindowAnimations(setAnim());
         window.setAttributes(lp);
+        window.setSoftInputMode(setSoftInputState());
         setCanceledOnTouchOutside(true);// 点击Dialog外部消失
+        super.setContentView(mContentView);
     }
 
-    public float setAlpha(float alpha) {
-        return alpha;
+    public float setAlpha() {
+        return 0.5f;
     }
 
     public int setAnim() {
@@ -84,6 +85,11 @@ public abstract class BaseCustomDialog extends Dialog {
         show();
         mContentView.findViewById(ids).setOnClickListener(listener);
     }
+
+    public int setSoftInputState() {
+        return WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
+    }
+
 
     @Override
     public void show() {

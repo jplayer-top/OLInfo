@@ -3,6 +3,7 @@ package top.jplayer.baseprolibrary.widgets.dialog;
 import android.content.Context;
 import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -31,7 +32,11 @@ public class DialogEdit extends BaseCustomDialog {
             editPassword.setSelection(editPassword.getText().length());
         });
     }
-
+    @Override
+    public int setSoftInputState() {
+        return WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE |
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
+    }
     @Override
     public int setWidth(int i) {
         return super.setWidth(8);

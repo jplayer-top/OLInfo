@@ -14,6 +14,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/adapter_sample"/>
+            tools:listitem="@layout/adapter_sample_00"/>
     </android.support.v7.widget.CardView>
 </FrameLayout>

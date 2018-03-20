@@ -16,8 +16,6 @@ import top.jplayer.baseprolibrary.utils.ToastUtils;
 
 public class DialogLoading extends BaseCustomDialog {
 
-    private SpinKitView mLoadingView;
-    private TextView mTextView;
 
     public DialogLoading(Context context) {
         super(context);
@@ -25,8 +23,6 @@ public class DialogLoading extends BaseCustomDialog {
 
     @Override
     protected void initView(View view) {
-        mLoadingView = view.findViewById(R.id.spin_kit);
-        mTextView = view.findViewById(R.id.name);
     }
 
     @Override
@@ -34,26 +30,9 @@ public class DialogLoading extends BaseCustomDialog {
         return R.layout.dialog_loading_spinkit;
     }
 
-    public void setLoadingText(CharSequence charSequence) {
-        mTextView.setText(charSequence);
-    }
-
-    public void setLoadingColor(int color) {
-        mLoadingView.setColor(color);
-    }
-
-    public void cancel(String str) {
-        cancel();
-        ToastUtils.init().showQuickToast(getContext(), str);
-    }
-
-    public SpinKitView getLoadingView() {
-        return mLoadingView;
-    }
-
-
-    public TextView getTextView() {
-        return mTextView;
+    @Override
+    public int setWidth(int i) {
+        return super.setWidth(5);
     }
 
 }
