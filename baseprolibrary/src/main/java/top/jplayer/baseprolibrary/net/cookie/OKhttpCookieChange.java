@@ -67,7 +67,7 @@ public class OKhttpCookieChange implements CookieStore {
 
         if (cookie.persistent()) {
             if (!cookies.containsKey(uri.host())) {
-                cookies.put(uri.host(), new ConcurrentHashMap<String, Cookie>());
+                cookies.put(uri.host(), new ConcurrentHashMap<>());
             }
             cookies.get(uri.host()).put(name, cookie);
         }/* else
@@ -83,10 +83,13 @@ public class OKhttpCookieChange implements CookieStore {
 
         // Save cookie into persistent store
         SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
-        Set<String> tokens = cookies.get(uri.host()).keySet();
-        prefsWriter.putString(uri.host(), TextUtils.join(",", tokens));
-        prefsWriter.putString(COOKIE_NAME_PREFIX + name, encodeCookie(new SerializableHttpCookie(cookie)));
-        prefsWriter.apply();
+        ConcurrentMap<String, Cookie> map = cookies.get(uri.host());
+        if (map != null) {
+            Set<String> tokens = map.keySet();
+            prefsWriter.putString(uri.host(), TextUtils.join(",", tokens));
+            prefsWriter.putString(COOKIE_NAME_PREFIX + name, encodeCookie(new SerializableHttpCookie(cookie)));
+            prefsWriter.apply();
+        }
     }
 
     protected String getCookieToken(Cookie cookie) {
