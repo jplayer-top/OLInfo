@@ -17,11 +17,13 @@
             android:layout_height="match_parent">
 
             <ImageView
+
                 android:id="@+id/iv_logo"
                 android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_height="80dp"
                 android:padding="@dimen/dp_10"
-                android:src="@drawable/ic_launcher_round"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder"/>
 
             <View
                 android:layout_width="3dp"
@@ -46,6 +48,9 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
+                android:layout_marginEnd="@dimen/dp_40"
+                android:ellipsize="end"
+                android:lines="1"
                 android:id="@+id/tvSub"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

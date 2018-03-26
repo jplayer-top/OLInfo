@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.modiwu.myapplication.adapter.AdapterMain;
+import com.modiwu.myapplication.mvp.model.bean.DialogInfo;
 import com.modiwu.myapplication.mvp.presenter.ShopCartPresenter;
 
 import java.util.ArrayList;
@@ -44,19 +45,19 @@ public class MainActivity extends SuperBaseActivity implements IContract.IView {
     public void initRootData(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ArrayList<String> beans = new ArrayList<>();
-        beans.add("提交成功");
-        beans.add("新手礼包");
-        beans.add("抢红包");
-        beans.add("签到");
-        beans.add("分享");
-        beans.add("输入框");
-        beans.add("加载中");
-        beans.add("退出登录");
-        beans.add("订单结算");
-        beans.add("选择器");
-        beans.add("输入法跟随弹出");
-        beans.add("选择列表");
+        ArrayList<DialogInfo> beans = new ArrayList<>();
+        beans.add(new DialogInfo("提交成功", "广告页,确认页", "http://file.jplayer.top/image/1.jpg"));
+        beans.add(new DialogInfo("新手礼包", "新用户礼包，活动", "http://file.jplayer.top/image/2.jpg"));
+        beans.add(new DialogInfo("抢红包", "抢红包动画，图片自己配", "http://file.jplayer.top/image/3.png"));
+        beans.add(new DialogInfo("签到", "每日签到", "http://file.jplayer.top/image/4.jpg"));
+        beans.add(new DialogInfo("分享", "可做成列表类型", "http://file.jplayer.top/image/5.jpg"));
+        beans.add(new DialogInfo("输入框", "含有输入框，伴随打开输入法", "http://file.jplayer.top/image/6.png"));
+        beans.add(new DialogInfo("加载中", "常见的加载，采用控件spitview", "http://file.jplayer.top/image/1.jpg"));
+        beans.add(new DialogInfo("退出登录", "常见图片加文字确认取消类型", "http://file.jplayer.top/image/2.jpg"));
+        beans.add(new DialogInfo("订单结算", "常用到的订单Dialog,仿淘宝，Json数据自行修改", "http://file.jplayer.top/image/3.png"));
+        beans.add(new DialogInfo("选择器", "", "http://file.jplayer.top/image/4.jpg"));
+        beans.add(new DialogInfo("输入法跟随弹出", "具体使用请查看：https://github.com/Bigkoo/Android-PickerView", "http://file.jplayer.top/image/5.jpg"));
+        beans.add(new DialogInfo("选择列表", "内嵌RecycleView，常见选择框", "http://file.jplayer.top/image/6.png"));
         mAdapter = new AdapterMain(beans);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, v, position) -> {
