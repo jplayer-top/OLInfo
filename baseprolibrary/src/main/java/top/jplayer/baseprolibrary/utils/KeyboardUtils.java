@@ -1,10 +1,17 @@
 package top.jplayer.baseprolibrary.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import com.github.florent37.viewanimator.ViewAnimator;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -64,17 +71,49 @@ public class KeyboardUtils {
         return false;
     }
 
-    /**
-     * 点击空白处，关闭输入
-     *
-     */
-    public void clickBound2CloseInput(Activity activity, MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = activity.getCurrentFocus();
-            if (isShouldHideKeyboard(v, ev)) {
-                hideSoftInput(activity);
-            }
+    public  boolean checkKeyboard(Activity activity, View v) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && imm.hideSoftInputFromWindow(v.getWindowToken(), 0)) {
+            imm.showSoftInput(v, 0);
+            return true;
+            //软键盘已弹出
+        } else {
+            return false;
+            //软键盘未弹出
         }
     }
 
+    /**
+     * 点击空白处，延时三百毫秒关闭键盘，避免 多个EditText 在同一个界面，出现的键盘闪烁问题
+     */
+    public void clickBound2CloseInput(Activity activity, MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            Observable.timer(300, TimeUnit.MILLISECONDS).subscribe(aLong -> {
+                View v = activity.getCurrentFocus();
+                if (isShouldHideKeyboard(v, ev)) {
+                    hideSoftInput(activity);
+                }
+            });
+
+        }
+    }
+    public void fixKeyBorder(View viewMove, View viewStationary, View container) {
+        int height = ScreenUtils.getScreenHeight();
+        viewMove.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+        {
+            if (height - bottom > height * 0.3f) {
+                LogUtil.e("-----up ----");
+                float staY = viewStationary.getY();
+                float moveY = viewMove.getY();
+                float scroll = moveY - staY;
+                int fix = SizeUtils.dp2px(20);
+                if (scroll < fix) {
+                    ViewAnimator.animate(container).translationY(scroll - fix).duration(200).start();
+                }
+            } else {
+                LogUtil.e("-----down ----");
+                ViewAnimator.animate(container).dp().translationY(0).duration(200).start();
+            }
+        });
+    }
 }

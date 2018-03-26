@@ -1,6 +1,8 @@
 package top.jplayer.baseprolibrary.utils;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -53,4 +55,12 @@ public class StringUtils {
         return preStr;
     }
 
+
+    public void tipEditTextLength(EditText edit, Editable s, int maxLen, String msg) {
+        if (s.length() > maxLen) {
+            ToastUtils.init().showQuickToast(msg);
+            edit.setText(s.subSequence(0, maxLen));
+            edit.setSelection(edit.getText().length());
+        }
+    }
 }

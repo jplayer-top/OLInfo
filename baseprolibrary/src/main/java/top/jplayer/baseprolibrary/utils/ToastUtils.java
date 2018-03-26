@@ -8,6 +8,7 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 import es.dmoral.toasty.Toasty;
+import top.jplayer.baseprolibrary.BaseInitApplication;
 
 /**
  * Created by Administrator on 2018/1/27.
@@ -67,5 +68,9 @@ public class ToastUtils {
         }
         toast.setText(msg);
         toast.show();
+    }
+
+    public void showQuickToast(String msg) {
+        showQuickToast(BaseInitApplication.getContext(), msg);
     }
 }

@@ -8,7 +8,7 @@ import devlight.io.library.ntb.NavigationTabBar;
  * 这可点击一次的底部栏
  */
 
-public abstract class NetNavigationBarListener implements devlight.io.library.ntb.NavigationTabBar.OnTabBarSelectedIndexListener {
+public abstract class NetNavigationBarListener implements NavigationTabBar.OnTabBarSelectedIndexListener {
     private int lastIndex = -1;
 
     @Override

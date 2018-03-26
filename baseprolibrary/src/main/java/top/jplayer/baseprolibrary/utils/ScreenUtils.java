@@ -89,7 +89,7 @@ public final class ScreenUtils {
      * @return 屏幕高
      */
     public static int getScreenHeight() {
-        WindowManager wm = (WindowManager)BaseInitApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) BaseInitApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
         if (wm == null) {
             return BaseInitApplication.getContext().getResources().getDisplayMetrics().heightPixels;
         }
@@ -245,7 +245,7 @@ public final class ScreenUtils {
      */
     public static boolean isScreenLock() {
         KeyguardManager km =
-                (KeyguardManager)BaseInitApplication.getContext().getSystemService(Context.KEYGUARD_SERVICE);
+                (KeyguardManager) BaseInitApplication.getContext().getSystemService(Context.KEYGUARD_SERVICE);
         return km != null && km.inKeyguardRestrictedInputMode();
     }
 
